@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Proposal · Danielle Fence Estimating Software</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --accent:#0f9d6b; --accent-dk:#0a7d56; --accent-lt:#cdeede;
+    --ink:#191912; --cream:#efeee4; --warm:#e7e6da; --card:#dddcce;
+    --rule:#d0cfbf; --mid:#b0b0a0; --soft:#888878;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--cream);color:var(--ink);}
+  body{font-family:"DM Sans",system-ui,sans-serif;font-size:15px;line-height:1.65;-webkit-font-smoothing:antialiased;}
+  .page{max-width:880px;margin:0 auto;padding:56px 72px;background:var(--cream);}
+  h2,h3,h4{margin:0;}
+  p{margin:0 0 14px 0;}
+  a{color:var(--accent-dk);}
+
+  /* password gate */
+  .gate{position:fixed;inset:0;z-index:9999;background:var(--ink);display:flex;align-items:center;justify-content:center;padding:24px;}
+  .gate-box{max-width:380px;width:100%;text-align:center;}
+  .gate-word{font-family:"Bebas Neue",sans-serif;font-size:18px;letter-spacing:.34em;color:var(--accent);margin-bottom:24px;}
+  .gate-msg{color:var(--cream);opacity:.85;font-size:14px;margin-bottom:20px;}
+  .gate-box input{width:100%;padding:13px 16px;font-size:15px;font-family:"DM Sans";border:1px solid #3a3a30;background:#23231c;color:var(--cream);border-radius:4px;margin-bottom:12px;}
+  .gate-box input:focus{outline:none;border-color:var(--accent);}
+  .gate-box button{width:100%;padding:13px 16px;font-size:14px;font-weight:700;letter-spacing:.04em;background:var(--accent);color:var(--ink);border:0;border-radius:4px;cursor:pointer;}
+  .gate-box button:hover{background:var(--accent-dk);color:var(--cream);}
+  .gate-err{color:#e9a66a;font-size:13px;min-height:18px;margin:12px 0 0;}
+
+  /* pricing placeholder */
+  .tbc{display:inline-block;background:var(--warm);color:var(--soft);font-family:"DM Sans",sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:3px;white-space:nowrap;}
+
+  /* cover */
+  .cover{min-height:100vh;max-width:880px;margin:0 auto;background:var(--ink);color:var(--cream);padding:80px 72px 64px;display:flex;flex-direction:column;page-break-after:always;}
+  .cover .wordmark{font-family:"Bebas Neue",sans-serif;font-size:15px;letter-spacing:.34em;color:var(--accent);}
+  .cover .cover-mid{flex:1;display:flex;flex-direction:column;justify-content:center;padding:64px 0;}
+  .cover .kicker{font-size:11px;font-weight:700;letter-spacing:.42em;text-transform:uppercase;color:var(--accent);margin-bottom:24px;}
+  .cover .title{font-family:"Bebas Neue",sans-serif;font-weight:400;font-size:84px;line-height:.92;letter-spacing:.01em;margin:0 0 24px 0;}
+  .cover .subtitle{font-size:18px;line-height:1.5;color:var(--cream);max-width:560px;margin:0 0 36px 0;opacity:.92;}
+  .cover .cover-letter{max-width:600px;border-left:3px solid var(--accent);padding-left:20px;}
+  .cover .cover-letter p{font-size:14px;line-height:1.6;margin:0 0 10px 0;opacity:.92;}
+  .cover .cover-letter .signoff{font-weight:600;margin-top:12px;opacity:1;}
+  .cover .cover-bot{border-top:1px solid #3a3a30;padding-top:26px;display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:24px;}
+  .cover .meta-label{font-size:9px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--soft);margin-bottom:6px;}
+  .cover .meta-val{font-size:13px;font-weight:600;color:var(--cream);}
+
+  /* sections */
+  .eyebrow{font-size:10px;font-weight:700;letter-spacing:.38em;text-transform:uppercase;color:var(--soft);margin-bottom:10px;}
+  .sec-title{font-weight:700;font-size:30px;letter-spacing:-.02em;margin:0 0 20px 0;line-height:1.1;}
+  .lead{font-size:17px;line-height:1.55;margin-bottom:22px;}
+  .section{padding:48px 0;border-bottom:1px solid var(--rule);}
+  .section:last-child{border-bottom:0;}
+  .subhead{font-family:"Bebas Neue",sans-serif;font-size:30px;letter-spacing:.03em;color:var(--ink);margin:30px 0 4px;}
+  .subhead .ph{color:var(--accent-dk);}
+
+  .callout{background:var(--warm);padding:20px 26px;border-left:3px solid var(--accent);margin:18px 0;border-radius:2px;}
+  .callout p:last-child{margin-bottom:0;}
+  .highlight{background:var(--accent-lt);padding:18px 24px;border-left:5px solid var(--accent-dk);margin:18px 0;border-radius:2px;}
+  .highlight p:last-child{margin-bottom:0;}
+  .note{font-size:13px;color:var(--soft);line-height:1.55;margin:14px 0;}
+  .note strong{color:#5b5b4d;}
+
+  .pcards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:8px 0 4px;}
+  .pcard{border:1px solid var(--rule);border-radius:3px;padding:22px 24px;background:#fff;}
+  .pcard .tag{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-dk);}
+  .pcard h4{font-size:17px;font-weight:700;margin:4px 0 8px;}
+  .pcard p{font-size:13.5px;margin:0 0 10px;color:#333;}
+  .pcard ul{margin:0;padding-left:18px;}
+  .pcard li{font-size:13px;margin:5px 0;}
+
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:18px;}
+  .col h4{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;}
+  .col.built h4{color:var(--accent-dk);}
+  .col.todo h4{color:#a8632a;}
+  .col ul{margin:0;padding:0;list-style:none;}
+  .col li{font-size:14px;padding:8px 0 8px 20px;border-bottom:1px dotted var(--card);position:relative;}
+  .col li:before{content:"";position:absolute;left:0;top:15px;width:8px;height:8px;border-radius:2px;}
+  .col.built li:before{background:var(--accent);}
+  .col.todo li:before{background:#c98a4a;}
+
+  .feat{display:flex;gap:16px;padding:16px 0;border-top:1px solid var(--rule);}
+  .feat .n{font-family:"Bebas Neue",sans-serif;font-size:30px;color:var(--accent-dk);line-height:1;min-width:34px;}
+  .feat h4{font-size:16px;font-weight:700;margin-bottom:4px;}
+  .feat p{font-size:14px;margin:0;color:#333;}
+
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0 2px;}
+  .chip{font-family:"Bebas Neue",sans-serif;letter-spacing:.06em;font-size:15px;background:var(--ink);color:var(--cream);padding:5px 14px;border-radius:3px;}
+  .flow .arr{color:var(--soft);font-weight:700;}
+
+  table{width:100%;border-collapse:collapse;margin:16px 0;}
+  th{font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--soft);text-align:left;padding:8px 0;border-bottom:1px solid var(--ink);}
+  td{font-size:14px;padding:11px 0;border-bottom:1px dotted var(--card);vertical-align:top;}
+  td.num{text-align:right;font-family:"Bebas Neue",sans-serif;font-size:18px;letter-spacing:.02em;white-space:nowrap;}
+  tr.total td{border-top:2px solid var(--ink);border-bottom:0;font-weight:700;padding-top:12px;}
+  tr.total td.num{font-size:22px;color:var(--accent-dk);}
+
+  .tiers{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:18px 0;}
+  .tier{border:1px solid var(--rule);border-radius:3px;padding:22px 24px;background:#fff;}
+  .tier .price{font-family:"Bebas Neue",sans-serif;font-size:34px;color:var(--ink);line-height:1;}
+  .tier .price small{font-size:13px;color:var(--soft);font-family:"DM Sans";}
+  .tier h4{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-dk);margin:0 0 8px;}
+  .tier p{font-size:13px;margin:8px 0 0;color:#333;}
+
+  ul.clean{margin:8px 0;padding-left:20px;}
+  ul.clean li{font-size:14px;margin:6px 0;}
+  .small{font-size:12.5px;color:var(--soft);}
+
+  @media print{
+    @page{margin:0;}
+    body{font-size:12.5px;}
+    .page{padding:40px 54px;}
+    .cover{min-height:auto;padding:64px 54px;}
+    .cover .title{font-size:62px;}
+    .sec-title{font-size:24px;}
+    .subhead{font-size:26px;}
+    .section{padding:30px 0;page-break-inside:avoid;}
+    .feat,.tier,.callout,.highlight,.cols,.pcards,.pcard{page-break-inside:avoid;}
+    *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  }
+</style>
+</head>
+<body>
+
+<!-- PASSWORD GATE -->
+<div id="gate" class="gate">
+  <div class="gate-box">
+    <div class="gate-word">DANIELLE FENCE</div>
+    <p class="gate-msg">This proposal is private. Please enter the password to view it.</p>
+    <input id="gate-pw" type="password" placeholder="Password" autocomplete="off" autofocus />
+    <button id="gate-btn" type="button">View Proposal</button>
+    <p id="gate-err" class="gate-err"></p>
+  </div>
+</div>
+
+<div id="doc" style="display:none">
+
+<!-- COVER -->
+<div class="cover">
+  <div class="wordmark">DANIELLE FENCE &amp; OUTDOOR LIVING</div>
+  <div class="cover-mid">
+    <div class="kicker">Custom Software Proposal · Early Preview</div>
+    <h1 class="title">COMPLETING YOUR<br>FENCE ESTIMATOR</h1>
+    <p class="subtitle">Finish the estimating tool your team already started and connect it to NetSuite. A working field system, built around how Danielle Fence quotes, and fully under your control.</p>
+    <div class="cover-letter">
+      <p>Marc, Chris, David,</p>
+      <p>I spent real time inside the estimating tool your previous developer built. The good news is that you are not starting from scratch. The core of the system, the drawing tool and the way it turns a fence layout into a materials list, is in place.</p>
+      <p>The work ahead is real: finishing the pieces that were left incomplete, loading your pricing and full product line, and building the connection to NetSuite. This is an early look at the approach in two clear phases. Final pricing is being confirmed after a brief technical review of your system.</p>
+      <p class="signoff">Ben McCraw</p>
+    </div>
+  </div>
+  <div class="cover-bot">
+    <div><div class="meta-label">Prepared For</div><div class="meta-val">Danielle Fence</div></div>
+    <div><div class="meta-label">Prepared By</div><div class="meta-val">Ben McCraw</div></div>
+    <div><div class="meta-label">Pricing</div><div class="meta-val">Being finalized</div></div>
+    <div><div class="meta-label">Timeline</div><div class="meta-val">~6–8 Weeks</div></div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- 01 EXEC SUMMARY -->
+  <div class="section">
+    <div class="eyebrow">01 · Executive Summary</div>
+    <h2 class="sec-title">A head start, and the work to finish it</h2>
+    <p class="lead">Your previous developer built a real foundation. The drawing tool and the automatic materials list are in place; we tested the layout tool and the materials list generates as expected.</p>
+    <p>The unfinished items:</p>
+    <ul class="clean">
+      <li>Your pricing and full product line are not loaded yet (the tool currently shows $0, and only the PVC/Lakeland line exists).</li>
+      <li>Two features were never built: customer signatures and lead/status tracking.</li>
+      <li>It does not connect to NetSuite yet.</li>
+    </ul>
+    <p style="font-weight:700;font-size:17px;margin:26px 0 12px;">Our recommendation is to complete it in two phases:</p>
+    <div class="pcards">
+      <div class="pcard">
+        <div class="tag">Phase 1</div>
+        <h4>Finish the field estimator</h4>
+        <p>Reps quote a fence on-site, start to finish, in one tool.</p>
+        <ul>
+          <li>Create estimates</li>
+          <li>Automatic bill of materials</li>
+          <li>Picture storage</li>
+          <li>Customer signatures</li>
+          <li>Lead / status tracking</li>
+        </ul>
+      </div>
+      <div class="pcard">
+        <div class="tag">Phase 2</div>
+        <h4>Connect to NetSuite</h4>
+        <p>A signed quote flows into NetSuite automatically, with no hand re-keying.</p>
+        <ul>
+          <li>Create / update the Opportunity</li>
+          <li>Create the Sales Order on a win</li>
+          <li>Push the bill of materials</li>
+          <li>Two-way lead / status sync</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:18px"><strong>Why this fits.</strong> A vendor platform means a long rollout, per-seat fees indefinitely, and reshaping your process around their software. Completing a tool that was built for a fence company keeps it aligned to how Danielle Fence actually quotes, and it grows with you. The broader scope in your requirements document becomes a clear roadmap we build over time.</p>
+  </div>
+
+  <!-- 02 WHERE IT STANDS -->
+  <div class="section">
+    <div class="eyebrow">02 · Where It Stands Today</div>
+    <h2 class="sec-title">What is complete, and what is outstanding</h2>
+    <div class="cols">
+      <div class="col built">
+        <h4>Built &amp; working</h4>
+        <ul>
+          <li>Drawing tool: fence lines, corners, gates with swing, obstacles, slopes, site symbols</li>
+          <li>Automatic bill of materials from the drawing (panels, posts, caps, gates)</li>
+          <li>Photo capture from a phone (QR upload) with markup</li>
+          <li>A clean data structure underneath, built to connect to NetSuite</li>
+        </ul>
+      </div>
+      <div class="col todo">
+        <h4>Outstanding (the work)</h4>
+        <ul>
+          <li>Pricing is not loaded; the tool currently shows $0</li>
+          <li>Only the PVC (Lakeland) line exists; other products need adding</li>
+          <li>No customer signature feature</li>
+          <li>No lead / status tracking</li>
+          <li>No NetSuite connection</li>
+          <li>An aerial / satellite address lookup was started but not switched on</li>
+          <li>Housekeeping: the site's security certificate has lapsed</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout"><p>Our diagnosis mapped exactly what is complete and working and what work is outstanding. That clarity is why we can put firm scope in front of you, rather than padding for the unknown.</p></div>
+  </div>
+
+  <!-- 03 APPROACH -->
+  <div class="section">
+    <div class="eyebrow">03 · Our Approach</div>
+    <h2 class="sec-title">Finish, not rebuild</h2>
+    <p>We do not start over. We take what exists, finish the outstanding work, load your data, and connect it to NetSuite, working inside the environment you already own.</p>
+    <div class="feat"><div><h4>Finish what works</h4><p>Keep the proven drawing engine and materials-list logic; complete the gaps.</p></div></div>
+    <div class="feat"><div><h4>Built on what you own</h4><p>Your hosting is under your control, with no dependency on a former employee or vendor. We work within it and harden it, including renewing the lapsed security certificate.</p></div></div>
+    <div class="feat"><div><h4>Designed around how you sell</h4><p>Before we build, we learn how your inside and field sales teams actually work, step by step, so the tool fits the way you do business. The result is an experience that is intuitive to every user, from your most seasoned estimator to a brand-new rep, with no ambiguous icons and no unlabeled tools.</p></div></div>
+    <div class="feat"><div><h4>Phased and low-risk</h4><p>Phase 1 is a usable field tool on its own. Phase 2 adds NetSuite. The ongoing support keeps it healthy and growing.</p></div></div>
+  </div>
+
+  <!-- 04 PHASED DELIVERY -->
+  <div class="section">
+    <div class="eyebrow">04 · Phased Delivery</div>
+    <h2 class="sec-title">Two phases to a connected estimator</h2>
+
+    <h3 class="subhead"><span class="ph">Phase 1</span> · Finish the field estimator</h3>
+    <p class="lead" style="margin-top:8px">A complete, on-site estimating tool your reps use end to end.</p>
+    <div class="feat"><div class="n">1</div><div><h4>Discovery &amp; experience refinements</h4><p>As part of finishing the build, we review how your inside and field sales teams actually work and fold in targeted refinements so the tool fits your process and stays intuitive for every user. This is what makes the difference between a tool that is merely complete and one your team is glad to use every day.</p></div></div>
+    <div class="feat"><div class="n">2</div><div><h4>Complete estimates workflow</h4><p>Complete the guided estimate flow: select material, style, height, and color, draw the fence, and produce a price on-site, with the validation that keeps every required input correct. Includes the admin screen so your team can manage products and prices yourselves.</p></div></div>
+    <div class="feat"><div class="n">3</div><div><h4>Automatic bill of materials</h4><p>Complete the materials list for every product, not just Lakeland: real part numbers and pricing, so the bill of materials is accurate and ready to become an order.</p></div></div>
+    <div class="feat"><div class="n">4</div><div><h4>Picture storage</h4><p>Finish and verify photo capture, phone upload, and markup so every job carries its site photos.</p></div></div>
+    <div class="feat"><div class="n">5</div><div><h4>Customer signatures <span style="color:var(--accent-dk)">· new</span></h4><p>Capture the customer's signature on the quote, right on the device, so an approved quote is documented.</p></div></div>
+    <div class="feat"><div class="n">6</div><div><h4>Lead / status tracking <span style="color:var(--accent-dk)">· new</span></h4><p>Every quote carries a status, a follow-up date, and the rep it belongs to, so nothing slips.</p>
+      <div class="flow"><span class="chip">Draft</span><span class="arr">→</span><span class="chip">Sent</span><span class="arr">→</span><span class="chip">Signed / Won</span><span class="arr">→</span><span class="chip">Lost</span></div>
+    </div></div>
+    <p class="note"><strong>On lead tracking and NetSuite:</strong> this runs inside the tool on its own and does not require NetSuite. Phase 2 then syncs it to NetSuite so the two systems stay in step automatically.</p>
+    <div class="callout">
+      <p style="font-weight:700;margin-bottom:8px">Also included in Phase 1:</p>
+      <ul class="clean" style="margin:0">
+        <li>Renewing the lapsed security certificate and hardening the environment</li>
+        <li>The admin screen to manage products and prices</li>
+        <li>Loading your product line and pricing, from data you provide</li>
+        <li>Testing on real devices in the field</li>
+        <li>Training your team</li>
+        <li>Timeline ~6–8 weeks, with data-gathering running in parallel so the build is not waiting</li>
+      </ul>
+    </div>
+
+    <h3 class="subhead"><span class="ph">Phase 2</span> · Connect to NetSuite</h3>
+    <p class="lead" style="margin-top:8px">The piece that removes the hand re-keying.</p>
+    <ul class="clean">
+      <li>When a rep saves a quote, it creates or updates the <strong>Opportunity</strong> in NetSuite automatically (customer, address, quote).</li>
+      <li>When the customer signs, the tool creates the <strong>Sales Order</strong> and pushes the <strong>bill of materials</strong> into NetSuite for work orders and purchasing.</li>
+      <li>Lead/status tracking becomes <strong>two-way</strong>, with NetSuite as the system of record, so there is no double entry.</li>
+    </ul>
+    <div class="callout"><p>This is the most specialized work, and the exact effort depends on your NetSuite setup (how it is accessed, who administers it, whether there is a test environment). Phase 2 is confirmed once we have reviewed your NetSuite with your administrator. Multi-entity support, if needed, is scoped at that point.</p></div>
+
+    <h3 class="subhead">Investment</h3>
+    <div class="highlight"><p><strong>Final pricing is being confirmed.</strong> Once we complete a short technical review of your system, the exact figures for each phase will appear here in the final version of this proposal.</p></div>
+    <table>
+      <tr><th>Item</th><th style="text-align:right">Cost</th></tr>
+      <tr><td><strong>Phase 1</strong> · Finish the field estimator (fixed)</td><td class="num"><span class="tbc">Pending review</span></td></tr>
+      <tr><td><strong>Phase 2</strong> · NetSuite integration (estimate; confirmed after review)</td><td class="num"><span class="tbc">Pending review</span></td></tr>
+      <tr class="total"><td>Combined · fully NetSuite-connected estimator</td><td class="num"><span class="tbc">Pending review</span></td></tr>
+    </table>
+    <h3 class="subhead">Optional add-ons</h3>
+    <p style="margin-top:8px">À la carte, added to either phase as you choose:</p>
+    <table>
+      <tr><th>Add-on</th><th style="text-align:right">Price</th></tr>
+      <tr><td><strong>Aerial / address-trace</strong> — finish and switch on the satellite property view (plus a small Google usage cost)</td><td class="num"><span class="tbc">Pending</span></td></tr>
+      <tr><td><strong>Bulk catalog data entry</strong> — if you would rather we key in the price book than provide it structured</td><td class="num"><span class="tbc">Pending</span></td></tr>
+      <tr><td><strong>Email-link signature approval</strong> — remote approval / e-sign alongside on-device signing (plus service cost)</td><td class="num"><span class="tbc">Pending</span></td></tr>
+    </table>
+  </div>
+
+  <!-- 05 ROADMAP + ONGOING SUPPORT -->
+  <div class="section">
+    <div class="eyebrow">05 · Beyond Phase 2</div>
+    <h2 class="sec-title">Your continuing roadmap</h2>
+    <p>Your requirements document describes a complete estimating-and-sales platform. Phases 1 and 2 focus on building the foundation of that platform; the remaining features are addressed over time, through future phases or ongoing support:</p>
+    <div class="cols">
+      <div class="col"><ul class="clean">
+        <li>Commercial estimating: plan uploads, digital takeoffs, bid packages</li>
+        <li>Offline mode with sync for spotty job sites</li>
+        <li>In-field card payments</li>
+        <li>Supplier catalogs and mixing suppliers on one estimate</li>
+      </ul></div>
+      <div class="col"><ul class="clean">
+        <li>Sales pipeline reporting and conversion analytics</li>
+        <li>Roles, permissions, and audit logs across entities</li>
+        <li>Customer-facing self-serve estimator</li>
+        <li>Native reporting/dashboards; per-company branding</li>
+      </ul></div>
+    </div>
+    <div class="highlight"><p>Starting with this foundational work puts a working system in your team's hands quickly, and gives you a stable base to keep building toward the full vision, one phase at a time, with each step delivering value of its own.</p></div>
+
+    <h3 class="subhead">Ongoing support</h3>
+    <p style="margin-top:8px">Once the tool is live, ongoing support keeps it healthy and moving forward. Two levels will be offered (Care and Care + Build); pricing appears in the final version.</p>
+    <div class="tiers">
+      <div class="tier"><h4>Care</h4><div class="price"><span class="tbc">Pending review</span></div><p>Upkeep, security and hosting monitoring, small fixes, and support.</p></div>
+      <div class="tier"><h4>Care + Build</h4><div class="price"><span class="tbc">Pending review</span></div><p>Everything in Care, plus a monthly block of enhancement hours toward your roadmap.</p></div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+  (function(){
+    var PW = "picket"; // ← fence-themed password; change here if needed
+    var gate = document.getElementById('gate');
+    var doc = document.getElementById('doc');
+    var input = document.getElementById('gate-pw');
+    var err = document.getElementById('gate-err');
+    function unlock(){ gate.style.display='none'; doc.style.display='block'; try{ sessionStorage.setItem('df_ok','1'); }catch(e){} }
+    function attempt(){
+      if(input.value.trim().toLowerCase() === PW){ unlock(); }
+      else { err.textContent = 'Incorrect password. Please try again.'; input.value=''; input.focus(); }
+    }
+    document.getElementById('gate-btn').addEventListener('click', attempt);
+    input.addEventListener('keydown', function(e){ if(e.key==='Enter') attempt(); });
+    try{ if(sessionStorage.getItem('df_ok')==='1') unlock(); }catch(e){}
+  })();
+</script>
+
+</body>
+</html>
