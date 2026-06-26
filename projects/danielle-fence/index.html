@@ -21,20 +21,6 @@
   p{margin:0 0 14px 0;}
   a{color:var(--accent-dk);}
 
-  /* password gate */
-  .gate{position:fixed;inset:0;z-index:9999;background:var(--ink);display:flex;align-items:center;justify-content:center;padding:24px;}
-  .gate-box{max-width:380px;width:100%;text-align:center;}
-  .gate-word{font-family:"Bebas Neue",sans-serif;font-size:18px;letter-spacing:.34em;color:var(--accent);margin-bottom:24px;}
-  .gate-msg{color:var(--cream);opacity:.85;font-size:14px;margin-bottom:20px;}
-  .gate-box input{width:100%;padding:13px 16px;font-size:15px;font-family:"DM Sans";border:1px solid #3a3a30;background:#23231c;color:var(--cream);border-radius:4px;margin-bottom:12px;}
-  .gate-box input:focus{outline:none;border-color:var(--accent);}
-  .gate-box button{width:100%;padding:13px 16px;font-size:14px;font-weight:700;letter-spacing:.04em;background:var(--accent);color:var(--ink);border:0;border-radius:4px;cursor:pointer;}
-  .gate-box button:hover{background:var(--accent-dk);color:var(--cream);}
-  .gate-err{color:#e9a66a;font-size:13px;min-height:18px;margin:12px 0 0;}
-
-  /* pricing placeholder */
-  .tbc{display:inline-block;background:var(--warm);color:var(--soft);font-family:"DM Sans",sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 12px;border-radius:3px;white-space:nowrap;}
-
   /* cover */
   .cover{min-height:100vh;max-width:880px;margin:0 auto;background:var(--ink);color:var(--cream);padding:80px 72px 64px;display:flex;flex-direction:column;page-break-after:always;}
   .cover .wordmark{font-family:"Bebas Neue",sans-serif;font-size:15px;letter-spacing:.34em;color:var(--accent);}
@@ -65,6 +51,7 @@
   .note{font-size:13px;color:var(--soft);line-height:1.55;margin:14px 0;}
   .note strong{color:#5b5b4d;}
 
+  /* two-col phase cards (summary) */
   .pcards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:8px 0 4px;}
   .pcard{border:1px solid var(--rule);border-radius:3px;padding:22px 24px;background:#fff;}
   .pcard .tag{font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-dk);}
@@ -73,6 +60,7 @@
   .pcard ul{margin:0;padding-left:18px;}
   .pcard li{font-size:13px;margin:5px 0;}
 
+  /* built / unfinished cols */
   .cols{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:18px;}
   .col h4{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;}
   .col.built h4{color:var(--accent-dk);}
@@ -83,6 +71,7 @@
   .col.built li:before{background:var(--accent);}
   .col.todo li:before{background:#c98a4a;}
 
+  /* numbered features */
   .feat{display:flex;gap:16px;padding:16px 0;border-top:1px solid var(--rule);}
   .feat .n{font-family:"Bebas Neue",sans-serif;font-size:30px;color:var(--accent-dk);line-height:1;min-width:34px;}
   .feat h4{font-size:16px;font-weight:700;margin-bottom:4px;}
@@ -92,12 +81,19 @@
   .chip{font-family:"Bebas Neue",sans-serif;letter-spacing:.06em;font-size:15px;background:var(--ink);color:var(--cream);padding:5px 14px;border-radius:3px;}
   .flow .arr{color:var(--soft);font-weight:700;}
 
+  /* tables / invest */
   table{width:100%;border-collapse:collapse;margin:16px 0;}
   th{font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--soft);text-align:left;padding:8px 0;border-bottom:1px solid var(--ink);}
   td{font-size:14px;padding:11px 0;border-bottom:1px dotted var(--card);vertical-align:top;}
   td.num{text-align:right;font-family:"Bebas Neue",sans-serif;font-size:18px;letter-spacing:.02em;white-space:nowrap;}
   tr.total td{border-top:2px solid var(--ink);border-bottom:0;font-weight:700;padding-top:12px;}
   tr.total td.num{font-size:22px;color:var(--accent-dk);}
+  .invest{background:var(--ink);color:var(--cream);padding:32px 36px;margin:20px 0;border-radius:3px;display:grid;grid-template-columns:1fr 1fr;gap:28px;}
+  .invest .big{font-family:"Bebas Neue",sans-serif;font-size:64px;line-height:.9;color:var(--accent);}
+  .invest .big small{display:block;font-family:"DM Sans";font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--soft);margin-top:8px;font-weight:600;}
+  .invest .sched-label{font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--soft);margin-bottom:10px;}
+  .invest .sched div{font-size:13px;padding:5px 0;border-bottom:1px dotted #3a3a30;}
+  .invest .sched div:last-child{border-bottom:0;}
 
   .tiers{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:18px 0;}
   .tier{border:1px solid var(--rule);border-radius:3px;padding:22px 24px;background:#fff;}
@@ -118,45 +114,33 @@
     .cover .title{font-size:62px;}
     .sec-title{font-size:24px;}
     .subhead{font-size:26px;}
+    .invest .big{font-size:52px;}
     .section{padding:30px 0;page-break-inside:avoid;}
-    .feat,.tier,.callout,.highlight,.cols,.pcards,.pcard{page-break-inside:avoid;}
+    .feat,.tier,.invest,.callout,.highlight,.cols,.pcards,.pcard{page-break-inside:avoid;}
     *{-webkit-print-color-adjust:exact;print-color-adjust:exact;}
   }
 </style>
 </head>
 <body>
 
-<!-- PASSWORD GATE -->
-<div id="gate" class="gate">
-  <div class="gate-box">
-    <div class="gate-word">DANIELLE FENCE</div>
-    <p class="gate-msg">This proposal is private. Please enter the password to view it.</p>
-    <input id="gate-pw" type="password" placeholder="Password" autocomplete="off" autofocus />
-    <button id="gate-btn" type="button">View Proposal</button>
-    <p id="gate-err" class="gate-err"></p>
-  </div>
-</div>
-
-<div id="doc" style="display:none">
-
 <!-- COVER -->
 <div class="cover">
   <div class="wordmark">DANIELLE FENCE &amp; OUTDOOR LIVING</div>
   <div class="cover-mid">
-    <div class="kicker">Custom Software Proposal · Early Preview</div>
+    <div class="kicker">Custom Software Proposal</div>
     <h1 class="title">COMPLETING YOUR<br>FENCE ESTIMATOR</h1>
     <p class="subtitle">Finish the estimating tool your team already started and connect it to NetSuite. A working field system, built around how Danielle Fence quotes, and fully under your control.</p>
     <div class="cover-letter">
       <p>Marc, Chris, David,</p>
       <p>I spent real time inside the estimating tool your previous developer built. The good news is that you are not starting from scratch. The core of the system, the drawing tool and the way it turns a fence layout into a materials list, is in place.</p>
-      <p>The work ahead is real: finishing the pieces that were left incomplete, loading your pricing and full product line, and building the connection to NetSuite. This is an early look at the approach in two clear phases. Final pricing is being confirmed after a brief technical review of your system.</p>
+      <p>The work ahead is real: finishing the pieces that were left incomplete, loading your pricing and full product line, and building the connection to NetSuite. This proposal lays that out in two clear phases, plus ongoing support, so you can see exactly what each step delivers and what it costs.</p>
       <p class="signoff">Ben McCraw</p>
     </div>
   </div>
   <div class="cover-bot">
     <div><div class="meta-label">Prepared For</div><div class="meta-val">Danielle Fence</div></div>
     <div><div class="meta-label">Prepared By</div><div class="meta-val">Ben McCraw</div></div>
-    <div><div class="meta-label">Pricing</div><div class="meta-val">Being finalized</div></div>
+    <div><div class="meta-label">Phase 1</div><div class="meta-val">$35,000</div></div>
     <div><div class="meta-label">Timeline</div><div class="meta-val">~6–8 Weeks</div></div>
   </div>
 </div>
@@ -177,7 +161,7 @@
     <p style="font-weight:700;font-size:17px;margin:26px 0 12px;">Proposed two-phase approach</p>
     <div class="pcards">
       <div class="pcard">
-        <div class="tag">Phase 1</div>
+        <div class="tag">Phase 1 · $35,000</div>
         <h4>Finish the field estimator</h4>
         <p>Reps quote a fence on-site, start to finish, in one tool.</p>
         <ul>
@@ -189,7 +173,7 @@
         </ul>
       </div>
       <div class="pcard">
-        <div class="tag">Phase 2</div>
+        <div class="tag">Phase 2 · ~$26,000</div>
         <h4>Connect to NetSuite</h4>
         <p>A signed quote flows into NetSuite automatically, with no hand re-keying.</p>
         <ul>
@@ -230,7 +214,7 @@
         </ul>
       </div>
     </div>
-    <div class="callout"><p>Our diagnosis mapped exactly what is complete and working and what work is outstanding. That clarity is why we can put firm scope in front of you, rather than padding for the unknown.</p></div>
+    <div class="callout"><p>Our diagnosis mapped exactly what is complete and working and what work is outstanding. That clarity is why we can put firm scope and pricing in front of you, rather than padding a number for the unknown.</p></div>
   </div>
 
   <!-- 03 APPROACH -->
@@ -244,13 +228,13 @@
     <div class="feat"><div><h4>Phased and low-risk</h4><p>Phase 1 is a usable field tool on its own. Phase 2 adds NetSuite. The ongoing support keeps it healthy and growing.</p></div></div>
   </div>
 
-  <!-- 04 PHASED DELIVERY -->
+  <!-- 04 PHASED DELIVERY (Phase 1 + Phase 2 + pricing) -->
   <div class="section">
     <div class="eyebrow">04 · Phased Delivery</div>
     <h2 class="sec-title">Two phases to a connected estimator</h2>
 
     <h3 class="subhead"><span class="ph">Phase 1</span> · Finish the field estimator</h3>
-    <p class="lead" style="margin-top:8px">A complete, on-site estimating tool your reps use end to end.</p>
+    <p class="lead" style="margin-top:8px">A complete, on-site estimating tool your reps use end to end. Fixed price: $35,000.</p>
     <div class="feat"><div class="n">1</div><div><h4>Discovery &amp; experience refinements</h4><p>As part of finishing the build, we review how your inside and field sales teams actually work and fold in targeted refinements so the tool fits your process and stays intuitive for every user. This is what makes the difference between a tool that is merely complete and one your team is glad to use every day.</p></div></div>
     <div class="feat"><div class="n">2</div><div><h4>Complete estimates workflow</h4><p>Complete the guided estimate flow: select material, style, height, and color, draw the fence, and produce a price on-site, with the validation that keeps every required input correct. Includes the admin screen so your team can manage products and prices yourselves.</p></div></div>
     <div class="feat"><div class="n">3</div><div><h4>Automatic bill of materials</h4><p>Complete the materials list for every product, not just Lakeland: real part numbers and pricing, so the bill of materials is accurate and ready to become an order.</p></div></div>
@@ -273,29 +257,28 @@
     </div>
 
     <h3 class="subhead"><span class="ph">Phase 2</span> · Connect to NetSuite</h3>
-    <p class="lead" style="margin-top:8px">The piece that removes the hand re-keying.</p>
+    <p class="lead" style="margin-top:8px">The piece that removes the hand re-keying. Estimate: ~$26,000.</p>
     <ul class="clean">
       <li>When a rep saves a quote, it creates or updates the <strong>Opportunity</strong> in NetSuite automatically (customer, address, quote).</li>
       <li>When the customer signs, the tool creates the <strong>Sales Order</strong> and pushes the <strong>bill of materials</strong> into NetSuite for work orders and purchasing.</li>
       <li>Lead/status tracking becomes <strong>two-way</strong>, with NetSuite as the system of record, so there is no double entry.</li>
     </ul>
-    <div class="callout"><p>This is the most specialized work, and the exact effort depends on your NetSuite setup (how it is accessed, who administers it, whether there is a test environment). Phase 2 is confirmed once we have reviewed your NetSuite with your administrator. Multi-entity support, if needed, is scoped at that point.</p></div>
+    <div class="callout"><p>This is the most specialized work, and the exact effort depends on your NetSuite setup (how it is accessed, who administers it, whether there is a test environment). Phase 2 is an <strong>estimate we confirm once we have reviewed your NetSuite with your administrator.</strong> Multi-entity support, if needed, is scoped at that point.</p></div>
 
     <h3 class="subhead">Investment</h3>
-    <div class="highlight"><p><strong>Final pricing is being confirmed.</strong> Once we complete a short technical review of your system, the exact figures for each phase will appear here in the final version of this proposal.</p></div>
     <table>
       <tr><th>Item</th><th style="text-align:right">Cost</th></tr>
-      <tr><td><strong>Phase 1</strong> · Finish the field estimator (fixed)</td><td class="num"><span class="tbc">Pending review</span></td></tr>
-      <tr><td><strong>Phase 2</strong> · NetSuite integration (estimate; confirmed after review)</td><td class="num"><span class="tbc">Pending review</span></td></tr>
-      <tr class="total"><td>Combined · fully NetSuite-connected estimator</td><td class="num"><span class="tbc">Pending review</span></td></tr>
+      <tr><td><strong>Phase 1</strong> · Finish the field estimator (fixed)</td><td class="num">$35,000</td></tr>
+      <tr><td><strong>Phase 2</strong> · NetSuite integration (estimate; confirmed after review)</td><td class="num">~$26,000</td></tr>
+      <tr class="total"><td>Combined · fully NetSuite-connected estimator</td><td class="num">~$61,000</td></tr>
     </table>
     <h3 class="subhead">Optional add-ons</h3>
     <p style="margin-top:8px">À la carte, added to either phase as you choose:</p>
     <table>
       <tr><th>Add-on</th><th style="text-align:right">Price</th></tr>
-      <tr><td><strong>Aerial / address-trace</strong> — finish and switch on the satellite property view (plus a small Google usage cost)</td><td class="num"><span class="tbc">Pending</span></td></tr>
-      <tr><td><strong>Bulk catalog data entry</strong> — if you would rather we key in the price book than provide it structured</td><td class="num"><span class="tbc">Pending</span></td></tr>
-      <tr><td><strong>Email-link signature approval</strong> — remote approval / e-sign alongside on-device signing (plus service cost)</td><td class="num"><span class="tbc">Pending</span></td></tr>
+      <tr><td><strong>Aerial / address-trace</strong> — finish and switch on the satellite property view (plus a small Google usage cost)</td><td class="num">$3,000</td></tr>
+      <tr><td><strong>Bulk catalog data entry</strong> — if you would rather we key in the price book than provide it structured</td><td class="num">$2,500/line</td></tr>
+      <tr><td><strong>Email-link signature approval</strong> — remote approval / e-sign alongside on-device signing (plus service cost)</td><td class="num">$2,000</td></tr>
     </table>
   </div>
 
@@ -321,33 +304,13 @@
     <div class="highlight"><p>Starting with this foundational work puts a working system in your team's hands quickly, and gives you a stable base to keep building toward the full vision, one phase at a time, with each step delivering value of its own.</p></div>
 
     <h3 class="subhead">Ongoing support</h3>
-    <p style="margin-top:8px">Once the tool is live, ongoing support keeps it healthy and moving forward. Two levels will be offered (Care and Care + Build); pricing appears in the final version.</p>
+    <p style="margin-top:8px">Once the tool is live, ongoing support keeps it healthy and moving forward. Choose the level that fits:</p>
     <div class="tiers">
-      <div class="tier"><h4>Care</h4><div class="price"><span class="tbc">Pending review</span></div><p>Upkeep, security and hosting monitoring, small fixes, and support.</p></div>
-      <div class="tier"><h4>Care + Build</h4><div class="price"><span class="tbc">Pending review</span></div><p>Everything in Care, plus a monthly block of enhancement hours toward your roadmap.</p></div>
+      <div class="tier"><h4>Care</h4><div class="price">$1,500<small>/mo</small></div><p>Upkeep, security and hosting monitoring, small fixes, and support.</p></div>
+      <div class="tier"><h4>Care + Build</h4><div class="price">$3,000<small>/mo</small></div><p>Everything in Care, plus a monthly block of enhancement hours toward your roadmap.</p></div>
     </div>
   </div>
 
 </div>
-</div>
-
-<script>
-  (function(){
-    var PW = "picket"; // ← fence-themed password; change here if needed
-    var gate = document.getElementById('gate');
-    var doc = document.getElementById('doc');
-    var input = document.getElementById('gate-pw');
-    var err = document.getElementById('gate-err');
-    function unlock(){ gate.style.display='none'; doc.style.display='block'; try{ sessionStorage.setItem('df_ok','1'); }catch(e){} }
-    function attempt(){
-      if(input.value.trim().toLowerCase() === PW){ unlock(); }
-      else { err.textContent = 'Incorrect password. Please try again.'; input.value=''; input.focus(); }
-    }
-    document.getElementById('gate-btn').addEventListener('click', attempt);
-    input.addEventListener('keydown', function(e){ if(e.key==='Enter') attempt(); });
-    try{ if(sessionStorage.getItem('df_ok')==='1') unlock(); }catch(e){}
-  })();
-</script>
-
 </body>
 </html>
